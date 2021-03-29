@@ -93,12 +93,27 @@ public class Menu {
 	/**
 	 * User can Enter a valid username and password to create a new account
 	 */
-	public static void signup() {
-		Scanner signupInput = new Scanner(System.in);
-		
+	public static void signup() {		
 		System.out.println("Create a new Account:");
+		String username = getNewUsername();
+		String password = getNewPassword();
+		
+		User newUser = new User(username, password);
+		User.addUser(newUser);
+		System.out.println("Your new account was successfully created.");
+
+		showMenu();
+	}
+	
+	/**
+	 * Asks user to enter a valid username
+	 * 
+	 * @return a valid username String
+	 */
+	public static String getNewUsername() {
+		Scanner usernameInput = new Scanner(System.in);
 		System.out.println("Enter username: ");
-		String username = signupInput.nextLine();
+		String username = usernameInput.nextLine();
 		while(!User.isUsernameUnique(username) || username.length() < 5) {
 			if(!User.isUsernameUnique(username)) {
 				System.out.println("Invalid username. Username " + username + " already exists.");
@@ -106,13 +121,22 @@ public class Menu {
 				System.out.println("Invalid username. Username must be at least 5 characters.");
 			}
 			System.out.println("Enter username: ");
-			username = signupInput.nextLine();
+			username = usernameInput.nextLine();
 		}
-		
+		return username;
+	}
+	
+	/**
+	 * Asks user to enter a valid password
+	 * 
+	 * @return a valid password String
+	 */
+	public static String getNewPassword() {
+		Scanner passwordInput = new Scanner(System.in);
 		System.out.println("Enter password: ");
-		String password = signupInput.nextLine();
+		String password = passwordInput.nextLine();
 		System.out.println("Repeat password: ");
-		String repeatedPassword = signupInput.nextLine();
+		String repeatedPassword = passwordInput.nextLine();
 		while(!password.equals(repeatedPassword) || password.length() < 5) {
 			if(!password.equals(repeatedPassword)) {
 				System.out.println("Invalid password. Passwords didn't match.");
@@ -120,18 +144,10 @@ public class Menu {
 				System.out.println("Invalid password. Password must be at least 5 characters.");
 			}
 			System.out.println("Enter password: ");
-			password = signupInput.nextLine();
+			password = passwordInput.nextLine();
 			System.out.println("Repeat password: ");
-			repeatedPassword = signupInput.nextLine();
+			repeatedPassword = passwordInput.nextLine();
 		}
-		
-		User newUser = new User(username, password);
-		User.addUser(newUser);
-		System.out.println("Your new account was successfully created.");
-		for(User user: User.users) {
-			System.out.println(user.getUsername());
-			System.out.println(user.getPassword());
-		}
-		showMenu();
+		return password;
 	}
 }
