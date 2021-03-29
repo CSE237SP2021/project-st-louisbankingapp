@@ -16,17 +16,4 @@ class MenuTest {
 		//check 3: the quit option
 		assertFalse(menu.readOption(3));
 	}
-	
-	@Test
-	void isValidUsernameAndPassword() {
-		//if username and password are greater than 5 characters long
-		assertTrue(menu.isValidUsernameAndPassword("andrew", "bobbydrew"));
-		
-
-		//if username and/or password are less than 5 characters long
-		assertFalse(menu.isValidUsernameAndPassword("andrew", "bobb1"));
-		assertFalse(menu.isValidUsernameAndPassword("andre", "bobbydrew"));
-		assertFalse(menu.isValidUsernameAndPassword("andre", "bobb1"));
-	}
-
 }
