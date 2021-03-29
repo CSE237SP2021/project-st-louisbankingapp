@@ -44,7 +44,7 @@ public class Menu {
 			return true;
 			
 		case 2:
-			System.out.println("Create Account");
+			signup();
 			return true;
 			
 		case 3:
@@ -72,25 +72,66 @@ public class Menu {
 		if(isValidUsernameAndPassword(username, password)) {
 			System.out.println("Logged in successfully.");
 			
-			//TODO: Create User object and display user menu
+			User.currentUser = User.getUserByUsername(username);
+			//TODO: Display user menu
 		} else {
 			System.out.println("Invalid Username or Password.");
 		}
-		
 	}
 	
 	/**
-	 * Checks if the username and password are greater than 5 characters in length
+	 * Checks if the username and password are valid
 	 * 
 	 * @param username string to be checked if valid 
 	 * @param password string to be checked if valid 
 	 * @return true if the username and password are valid, false otherwise
 	 */
 	public static Boolean isValidUsernameAndPassword(String username, String password) {
-		if(username.length() > 5 && password.length() > 5) {
-			return true;
-		} else {
-			return false;
+		return User.authentication(username, password);
+	}
+	
+	/**
+	 * User can Enter a valid username and password to create a new account
+	 */
+	public static void signup() {
+		Scanner signupInput = new Scanner(System.in);
+		
+		System.out.println("Create a new Account:");
+		System.out.println("Enter username: ");
+		String username = signupInput.nextLine();
+		while(!User.isUsernameUnique(username) || username.length() < 5) {
+			if(!User.isUsernameUnique(username)) {
+				System.out.println("Invalid username. Username " + username + " already exists.");
+			} else {
+				System.out.println("Invalid username. Username must be at least 5 characters.");
+			}
+			System.out.println("Enter username: ");
+			username = signupInput.nextLine();
 		}
+		
+		System.out.println("Enter password: ");
+		String password = signupInput.nextLine();
+		System.out.println("Repeat password: ");
+		String repeatedPassword = signupInput.nextLine();
+		while(!password.equals(repeatedPassword) || password.length() < 5) {
+			if(!password.equals(repeatedPassword)) {
+				System.out.println("Invalid password. Passwords didn't match.");
+			} else {
+				System.out.println("Invalid password. Password must be at least 5 characters.");
+			}
+			System.out.println("Enter password: ");
+			password = signupInput.nextLine();
+			System.out.println("Repeat password: ");
+			repeatedPassword = signupInput.nextLine();
+		}
+		
+		User newUser = new User(username, password);
+		User.addUser(newUser);
+		System.out.println("Your new account was successfully created.");
+		for(User user: User.users) {
+			System.out.println(user.getUsername());
+			System.out.println(user.getPassword());
+		}
+		showMenu();
 	}
 }
