@@ -17,7 +17,7 @@ People above 16 that have or would like a bank account.
 ## Iteration 1
 
 What stories were completed:
-- Create Account (not sure if will me committed by 2:30 currently in review)
+- Create Account
 - Login
 - Deposit
 - Create run script
