@@ -1,4 +1,5 @@
 # CHECK DEVELOPMENT BRANCH!!!
+** Note we accidentially commited some code directly to master, we delete all the code and are now following proper standards. We also deleted the branches after so check our pull requests for proof
 
 # St. Louis Banking App
 
