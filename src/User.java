@@ -7,7 +7,6 @@ public class User {
 	private String password;
 	
 	//TODO: Add list of accounts
-	
 	static List<User> users = new ArrayList<User>();
 	static User currentUser;
 	
