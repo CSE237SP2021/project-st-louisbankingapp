@@ -19,4 +19,13 @@ public class Account {
 		return accountBalance;
 	}
 	
+	
+	public void checkInterest(){
+		double annualInterest = this.calculateAnnualInterest();
+		System.out.println("At a rate of " + this.interestRate*100 + "%, your annual interest is " + annualInterest);
+	}
+	
+	public double calculateAnnualInterest() {
+		return this.interestRate * this.accountBalance;
+	}
 }
