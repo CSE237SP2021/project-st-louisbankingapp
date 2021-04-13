@@ -1,12 +1,19 @@
 public class Account {
 	
 	double accountBalance;
+  double interestRate;
+	
+	public Account(double interestRate) {
+		this.accountBalance = 0;
+		this.interestRate = interestRate;
+	}
+
+
 	/**
 	 * Deposits some amount of money into the current accountBalance
 	 * @param amount
 	 * @return new current accountBalance
 	 */
-	
 	public double deposit(double amount) {
 		if (amount > 0) {
 			accountBalance += amount;
@@ -37,4 +44,13 @@ public class Account {
 		}
 	}
 	
+	
+	public void checkInterest(){
+		double annualInterest = this.calculateAnnualInterest();
+		System.out.println("At a rate of " + this.interestRate*100 + "%, your annual interest is " + annualInterest);
+	}
+	
+	public double calculateAnnualInterest() {
+		return this.interestRate * this.accountBalance;
+	}
 }
