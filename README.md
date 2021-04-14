@@ -43,17 +43,17 @@ What stories were completed:
 - Create Savings Account - Create Savings Account Class, still needs to be connected to the User menu as of now
 - Check Interest - Method to check the interest rate, not hooked up to the menu yet
 - Withdraw - user can withdraw money from account, not hooked up to the menu yet
-- Create Checking Account - May or may not be done by the due date work in progress.
+- Create Checking Account 
 
 What stories do we want to complete for next week?
 - Select Account to View
 - Account Menu
 - Transfer Money
 - Connect Withdaw, Deposit, Check Interest, Transfer to Account Menu
-- Connect Create Savings Account, Create Checking account to the User Menu
+- Connect Create Savings Account to the User Menu
 
 Anything we implemented but doesn't currently work
-- Currently the user can create account, login to the account. After logging in the user menu is displayed which shows the, options to create either type of account, select and account or loggout. Currently only loggout is implemented, the foundation for creating both types of accounts is set up but still needs to be connected to the menu.
+- Currently the user can create a user account, login to the account. After logging in the user menu is displayed which shows the, options to create either type of account, select and account or loggout. Currently creating a checking account works and loggout works, select an account displays all the accounts for the current user. Will add the ability to create savings account and select an account next iteration. When creating a checking account the Account menu is shown but none of the functionality works besides go back. 
 
 To Run:
 - Use the command * sh run.sh * on the command line
