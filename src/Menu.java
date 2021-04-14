@@ -82,7 +82,7 @@ public class Menu {
 			System.out.println("Logged in successfully.");
 			User.currentUser = User.getUserByUsername(username);
 			
-			UserMenu menu = new UserMenu(User.currentUser);
+			UserMenu menu = new UserMenu();
 			menu.runMenu();
 		} else {
 			System.out.println("Invalid Username or Password.");

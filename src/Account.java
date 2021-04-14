@@ -1,10 +1,36 @@
 public class Account {
 	
+	int accountNumber;
 	double accountBalance;
 	double interestRate;
 	
 	public Account(double interestRate) {
+		this.accountNumber = uniqueAccountNumber();
 		this.accountBalance = 0;
+		this.interestRate = interestRate;
+	}
+	
+	public int getAccountNumber() {
+		return this.accountNumber;
+	}
+	
+	public void setAccountNumber(int accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+	
+	public double getAccountBalance() {
+		return this.accountBalance;
+	}
+	
+	public void setAccountBalance(double accountBalance) {
+		this.accountBalance = accountBalance;
+	}
+	
+	public double getInterestRate() {
+		return this.interestRate;
+	}
+	
+	public void setInterestRate(double interestRate) {
 		this.interestRate = interestRate;
 	}
 
@@ -51,5 +77,31 @@ public class Account {
 	
 	public double calculateAnnualInterest() {
 		return this.interestRate * this.accountBalance;
+	}
+	
+	/**
+	 * Checks if an account number already exists
+	 * @param the account number to check
+	 * @return true if the account number already exists and false otherwise
+	 */
+	public boolean accountNumberAlreadyExists(int accountNumber) {
+		for(User user : User.users) {
+			for(Account account : user.getAccounts()) {
+				if(account.getAccountNumber() == accountNumber)
+					return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Creates a new 6 digits unique account number
+	 * @return a new unique 6 digits account number
+	 */
+	public int uniqueAccountNumber() {
+		int accountNumber = (int)(Math.random() * 900000) + 100000;
+		while(accountNumberAlreadyExists(accountNumber))
+			accountNumber = (int)(Math.random() * 900000) + 100000;
+		return accountNumber;
 	}
 }
