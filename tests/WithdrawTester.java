@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 class WithdrawTester {
 	
-	Account withdrawTester = new Account();
+	Account withdrawTester = new Account(1.5);
 	
 	@Test
 	void test() {

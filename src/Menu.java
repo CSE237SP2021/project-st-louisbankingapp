@@ -57,7 +57,7 @@ public class Menu {
 	}
 	
 	/**
-	 * User can Enter a username and password to login to account
+	 * User can enter a username and password to login to account
 	 */
 	public static void login() {
 		Scanner loginInput = new Scanner(System.in);
@@ -69,9 +69,17 @@ public class Menu {
 		System.out.println("Enter password: ");
 		String password = loginInput.nextLine();
 		
+		checkIfValidUser(username, password);
+	}
+	
+	/**
+	 * Checks if the username password combo is valid and runs the user menu if so
+	 * @param username entered by user
+	 * @param password entered by user
+	 */
+	public static void checkIfValidUser(String username, String password) {
 		if(isValidUsernameAndPassword(username, password)) {
 			System.out.println("Logged in successfully.");
-			
 			User.currentUser = User.getUserByUsername(username);
 			
 			UserMenu menu = new UserMenu(User.currentUser);
@@ -103,8 +111,6 @@ public class Menu {
 		User newUser = new User(username, password);
 		User.addUser(newUser);
 		System.out.println("Your new account was successfully created.");
-
-		showMenu();
 	}
 	
 	/**
@@ -114,18 +120,30 @@ public class Menu {
 	 */
 	public static String getNewUsername() {
 		Scanner usernameInput = new Scanner(System.in);
-		System.out.println("Enter username: ");
-		String username = usernameInput.nextLine();
-		while(!User.isUsernameUnique(username) || username.length() < 5) {
-			if(!User.isUsernameUnique(username)) {
-				System.out.println("Invalid username. Username " + username + " already exists.");
-			} else {
-				System.out.println("Invalid username. Username must be at least 5 characters.");
-			}
+		String username = "";
+		
+		do {
 			System.out.println("Enter username: ");
 			username = usernameInput.nextLine();
-		}
+		} while(!validNewUsername(username));
+
 		return username;
+	}
+	
+	/**
+	 * Checks if the username is a valid new username
+	 * @param username entered by user
+	 * @return true if the username is unique and longer than 5 characters
+	 */
+	public static boolean validNewUsername(String username) {
+		if(!User.isUsernameUnique(username)) {
+			System.out.println("Invalid username. Username " + username + " already exists.");
+			return false;
+		} else if(username.length() < 5) {
+			System.out.println("Invalid username. Username must be at least 5 characters.");
+			return false;
+		}
+		return true;
 	}
 	
 	/**
@@ -135,21 +153,33 @@ public class Menu {
 	 */
 	public static String getNewPassword() {
 		Scanner passwordInput = new Scanner(System.in);
-		System.out.println("Enter password: ");
-		String password = passwordInput.nextLine();
-		System.out.println("Repeat password: ");
-		String repeatedPassword = passwordInput.nextLine();
-		while(!password.equals(repeatedPassword) || password.length() < 5) {
-			if(!password.equals(repeatedPassword)) {
-				System.out.println("Invalid password. Passwords didn't match.");
-			} else {
-				System.out.println("Invalid password. Password must be at least 5 characters.");
-			}
+		String password, repeatedPassword = "";
+		
+		do {
 			System.out.println("Enter password: ");
 			password = passwordInput.nextLine();
+			
 			System.out.println("Repeat password: ");
 			repeatedPassword = passwordInput.nextLine();
-		}
+		} while(!validNewPasswords(password, repeatedPassword));
+
 		return password;
+	}
+	
+	/**
+	 * Checks if the password and repeated password are valid
+	 * @param password entered by user
+	 * @param repeatedPassword entered by user
+	 * @return returns true if the passwords match and are greater than 5 characters
+	 */
+	public static boolean validNewPasswords(String password, String repeatedPassword) {
+		if(!password.equals(repeatedPassword)) {
+			System.out.println("Invalid password. Passwords didn't match.");
+			return false;
+		} else if(password.length() < 5){
+			System.out.println("Invalid password. Password must be at least 5 characters.");
+			return false;
+		}
+		return true;
 	}
 }
