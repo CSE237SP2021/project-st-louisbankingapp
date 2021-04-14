@@ -1,12 +1,8 @@
 import java.util.Scanner;
 
 public class UserMenu {
-	
-	private User currentUser;
-	
-	public UserMenu(User user) {
-		this.currentUser = user;
-	}
+		
+	public UserMenu() {}
 	
 	public void runMenu() {
 		boolean isRunning = true;
@@ -30,7 +26,7 @@ public class UserMenu {
 		
 		try {
 			int optionNumber = userOption.nextInt();
-			
+
 			return readUserMenuOptions(optionNumber);
 		} catch (Exception e) {
 			System.out.println("Please enter an integer.");
@@ -46,13 +42,15 @@ public class UserMenu {
 	public boolean readUserMenuOptions(int option) {
 		switch(option) {
 		case 1:
-			return createSavingsAccount();
+			displayAccountMenu(createCheckingAccount());
+			return true;
 			
 		case 2:
-			return createCheckingAccount();
+			return createSavingsAccount();
 			
 		case 3:
-			return selectAccount();
+			selectAccount();
+			return true;
 			
 		case 4:
 			return false;
@@ -70,18 +68,54 @@ public class UserMenu {
 		return true;
 	}
 	
-	/* TODO Create checking account and display account menu */
-	public boolean createCheckingAccount() {
-		System.out.println("TO BE IMPLEMENTED: Create Checking Account");
-		return true;
+	/**
+	 * Creates a new checking account for the current user
+	 * @return checking account created
+	 */
+	public static Account createCheckingAccount() {
+		Account checkingAccount = new Account(0);
+		User.currentUser.addAccount(checkingAccount);
+		return checkingAccount;
 	}
 	
-	/* TODO: Display list of accounts for user to select from and 
-	 * allow user to pick one to display the account menu
+	/**
+	 * Displays the account's menu
+	 * @param the account that we want to display the menu of
 	 */
-	public boolean selectAccount() {
-		System.out.println("TO BE IMPLEMENTED: Select Account");
-		return true;
+	public void displayAccountMenu(Account account) {
+		AccountMenu accountMenu = new AccountMenu(account);
+		accountMenu.runMenu();
+	}
+	
+	/**
+	 * Displays the accounts of the current user and asks them which account they want to select
+	 */
+	public void selectAccount() {
+		if(User.currentUser.getAccounts().isEmpty()) {
+			System.out.println("You haven't created any account yet!");
+			
+		} else {
+			System.out.println("Which account do you want to select?");
+			for(int i = 0; i < User.currentUser.getAccounts().size(); i++) {
+				printAccount(User.currentUser.getAccounts().get(i), i);
+			}
+			/* TODO: Allow user to pick one to display the account menu */
+			System.out.println("TO BE IMPLEMENTED: Select Account");
+		}
+	}
+	
+	/**
+	 * Displays an account by printing its number, type and current balance
+	 * @param account to display
+	 * @param index of the account in the list of accounts of the current user
+	 */
+	public void printAccount(Account account, int index) {
+		String type = "savings";
+		if(account.getInterestRate() == 0)
+			type = "checking";
+		System.out.println((index + 1) + "  Account Number: " + account.getAccountNumber());
+		System.out.println("   Type: " + type);
+		System.out.println("   Current Balance: " + account.getAccountBalance());
 	}
 	
 }

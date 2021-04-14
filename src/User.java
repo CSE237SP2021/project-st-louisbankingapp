@@ -5,13 +5,14 @@ public class User {
 	
 	private String username;
 	private String password;
+	private List<Account> accounts;
 	
-	//TODO: Add list of accounts
 	static List<User> users = new ArrayList<User>();
 	static User currentUser;
 	
 	public User(String username, String password) {
 		super();
+		this.accounts = new ArrayList<>();
 		this.username = username;
 		this.password = password;
 	}
@@ -30,6 +31,14 @@ public class User {
 	
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public List<Account> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(List<Account> accounts) {
+		this.accounts = accounts;
 	}
 	
 	/**
@@ -88,5 +97,9 @@ public class User {
 			}
 		}
 		return false;
+	}
+	
+	public void addAccount(Account account) {
+		this.accounts.add(account);
 	}
 }
