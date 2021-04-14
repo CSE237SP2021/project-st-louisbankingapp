@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Test;
 
 class DepositTester {
 
-Account depositTester = new Account();
+	Account depositTester = new Account(2.5);
+
 	@Test
 	void testDeposit() {
 		assertEquals(0.0, depositTester.deposit(0.0));
