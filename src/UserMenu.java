@@ -42,7 +42,7 @@ public class UserMenu {
 	public boolean readUserMenuOptions(int option) {
 		switch(option) {
 		case 1:
-			createCheckingAccount();
+			displayAccountMenu(createCheckingAccount());
 			return true;
 			
 		case 2:
@@ -69,12 +69,21 @@ public class UserMenu {
 	}
 	
 	/**
-	 * Creates a new checking account for the current user and displays the new account's menu
+	 * Creates a new checking account for the current user
+	 * @return checking account created
 	 */
-	public void createCheckingAccount() {
+	public static Account createCheckingAccount() {
 		Account checkingAccount = new Account(0);
 		User.currentUser.addAccount(checkingAccount);
-		AccountMenu accountMenu = new AccountMenu(checkingAccount);
+		return checkingAccount;
+	}
+	
+	/**
+	 * Displays the account's menu
+	 * @param the account that we want to display the menu of
+	 */
+	public void displayAccountMenu(Account account) {
+		AccountMenu accountMenu = new AccountMenu(account);
 		accountMenu.runMenu();
 	}
 	
@@ -84,20 +93,29 @@ public class UserMenu {
 	public void selectAccount() {
 		if(User.currentUser.getAccounts().isEmpty()) {
 			System.out.println("You haven't created any account yet!");
+			
 		} else {
 			System.out.println("Which account do you want to select?");
 			for(int i = 0; i < User.currentUser.getAccounts().size(); i++) {
-				Account account = User.currentUser.getAccounts().get(i);
-				String type = "savings";
-				if(account.getInterestRate() == 0)
-					type = "checking";
-				System.out.println((i + 1) + "  Account Number: " + account.getAccountNumber());
-				System.out.println("   Type: " + type);
-				System.out.println("   Current Balance: " + account.getAccountBalance());
+				printAccount(User.currentUser.getAccounts().get(i), i);
 			}
 			/* TODO: Allow user to pick one to display the account menu */
 			System.out.println("TO BE IMPLEMENTED: Select Account");
 		}
+	}
+	
+	/**
+	 * Displays an account by printing its number, type and current balance
+	 * @param account to display
+	 * @param index of the account in the list of accounts of the current user
+	 */
+	public void printAccount(Account account, int index) {
+		String type = "savings";
+		if(account.getInterestRate() == 0)
+			type = "checking";
+		System.out.println((index + 1) + "  Account Number: " + account.getAccountNumber());
+		System.out.println("   Type: " + type);
+		System.out.println("   Current Balance: " + account.getAccountBalance());
 	}
 	
 }
