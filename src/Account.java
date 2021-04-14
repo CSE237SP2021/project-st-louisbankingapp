@@ -1,13 +1,12 @@
 public class Account {
 	
 	double accountBalance;
-  double interestRate;
+	double interestRate;
 	
 	public Account(double interestRate) {
 		this.accountBalance = 0;
 		this.interestRate = interestRate;
 	}
-
 
 	/**
 	 * Deposits some amount of money into the current accountBalance

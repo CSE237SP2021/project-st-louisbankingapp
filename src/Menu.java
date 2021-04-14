@@ -73,7 +73,9 @@ public class Menu {
 			System.out.println("Logged in successfully.");
 			
 			User.currentUser = User.getUserByUsername(username);
-			//TODO: Display user menu
+			
+			UserMenu menu = new UserMenu(User.currentUser);
+			menu.runMenu();
 		} else {
 			System.out.println("Invalid Username or Password.");
 		}
