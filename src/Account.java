@@ -104,4 +104,18 @@ public class Account {
 			accountNumber = (int)(Math.random() * 900000) + 100000;
 		return accountNumber;
 	}
+	
+	/**
+	 * Gets an account of the current user by the account number
+	 * @param accountNumber: the account number of the account to get
+	 * @return account with the account number if it exists, null otherwise
+	 */
+	public static Account getAccountByAccountNumber(int accountNumber) {
+		for(Account account : User.currentUser.getAccounts()) {
+			if(account.accountNumber == accountNumber) {
+				return account;
+			}
+		}
+		return null;
+	}
 }

@@ -20,8 +20,7 @@ public class AccountMenu {
 	 * @return returns true if the account menu should be displayed again, false if not
 	 */
 	public boolean displayAccountMenu() {
-		System.out.println("Account Number: " + this.account.getAccountNumber());
-		System.out.println("Current Balance: " + this.account.getAccountBalance());
+		UserMenu.printAccount(this.account);
 		
 		Scanner accountOption = new Scanner(System.in);
 		
