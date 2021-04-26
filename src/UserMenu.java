@@ -46,10 +46,11 @@ public class UserMenu {
 			return true;
 			
 		case 2:
-			return createSavingsAccount();
+			displayAccountMenu(createSavingsAccount());
+			return true;
 			
 		case 3:
-			selectAccount();
+			displayAccounts();
 			return true;
 			
 		case 4:
@@ -62,11 +63,6 @@ public class UserMenu {
 		
 	}
 	
-	/* TODO Create savings account and display account menu */
-	public boolean createSavingsAccount() {
-		System.out.println("TO BE IMPLEMENTED: Create Savings Account");
-		return true;
-	}
 	
 	/**
 	 * Creates a new checking account for the current user
@@ -74,6 +70,16 @@ public class UserMenu {
 	 */
 	public static Account createCheckingAccount() {
 		Account checkingAccount = new Account(0);
+		User.currentUser.addAccount(checkingAccount);
+		return checkingAccount;
+	}
+	
+	/**
+	 * Creates a new savings account for the current user
+	 * @return checking account created
+	 */
+	public static Account createSavingsAccount() {
+		Account checkingAccount = new Account(0.01);
 		User.currentUser.addAccount(checkingAccount);
 		return checkingAccount;
 	}
@@ -90,17 +96,37 @@ public class UserMenu {
 	/**
 	 * Displays the accounts of the current user and asks them which account they want to select
 	 */
-	public void selectAccount() {
+	public void displayAccounts() {
+		Scanner selectAccount = new Scanner(System.in);
+		
 		if(User.currentUser.getAccounts().isEmpty()) {
 			System.out.println("You haven't created any account yet!");
-			
 		} else {
-			System.out.println("Which account do you want to select?");
+			System.out.println("Enter account number to select account:");
 			for(int i = 0; i < User.currentUser.getAccounts().size(); i++) {
-				printAccount(User.currentUser.getAccounts().get(i), i);
+				System.out.print(i + 1 + ":");
+				printAccount(User.currentUser.getAccounts().get(i));
 			}
-			/* TODO: Allow user to pick one to display the account menu */
-			System.out.println("TO BE IMPLEMENTED: Select Account");
+			
+			try {
+				int accountNumber = selectAccount.nextInt();
+				selectAccount(accountNumber);
+			} catch (Exception e) {
+				System.out.println("Please enter an integer.");
+			}
+		}
+	}
+	
+	/**
+	 * Selects an account to display and displays its menu
+	 * @param accountNumber: the account number of the account to select
+	 */
+	public void selectAccount(int accountNumber) {
+		Account account = Account.getAccountByAccountNumber(accountNumber);
+		if(account == null) {
+			System.out.println("Please enter a valid account number.");
+		} else {
+			displayAccountMenu(account);
 		}
 	}
 	
@@ -109,13 +135,15 @@ public class UserMenu {
 	 * @param account to display
 	 * @param index of the account in the list of accounts of the current user
 	 */
-	public void printAccount(Account account, int index) {
-		String type = "savings";
-		if(account.getInterestRate() == 0)
-			type = "checking";
-		System.out.println((index + 1) + "  Account Number: " + account.getAccountNumber());
+	public static void printAccount(Account account) {
+		System.out.println(" Account Number: " + account.getAccountNumber());
+		String type = "checking";
+		if(account.getInterestRate() > 0) {
+			type = "saving";
+			System.out.println("   Interest rate: " + account.getInterestRate() * 100 + "%");
+		}
 		System.out.println("   Type: " + type);
-		System.out.println("   Current Balance: " + account.getAccountBalance());
+		System.out.println("   Current Balance: $" + account.getAccountBalance());
 	}
 	
 }
