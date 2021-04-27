@@ -48,16 +48,16 @@ public class AccountMenu {
 	public boolean readAccountMenuOptions(int option) {
 		switch(option) {
 		case 1:
-			// TODO: Deposit money from account
-			return false;
+			depositMoney();
+			return true;
 			
 		case 2:
-			// TODO: Withdraw money from account
-			return false;
+			withdrawMoney();
+			return true;
 			
 		case 3:
-			// TODO: Transfer money to another account
-			return false;
+			transferMoney();
+			return true;
 			
 		case 4:
 			return false;
@@ -66,6 +66,97 @@ public class AccountMenu {
 			System.out.println("Please select a valid option.");
 			return true;
 		}
+	}
+	
+	/**
+	 * Prompts user for how much to deposit into the account and deposits it
+	 */
+	public void depositMoney() {
+		Scanner amountEntered = new Scanner(System.in);
+		System.out.println("How much would you like to deposit?");
 		
+		try {
+			double amount = amountEntered.nextDouble();
+			this.account.deposit(amount);
+		} catch (Exception e) {
+			System.out.println("Please enter an double.");
+		}
+	}
+	
+	/**
+	 * Prompts user for how much to withdraw into the account and withdraws it
+	 */
+	public void withdrawMoney() {
+		Scanner amountEntered = new Scanner(System.in);
+		System.out.println("How much would you like to withdraw?");
+		
+		try {
+			double amount = amountEntered.nextDouble();
+			this.account.withdraw(amount);
+		} catch (Exception e) {
+			System.out.println("Please enter an double.");
+		}
+	}
+	
+	/**
+	 * Prompts user for an account to transfer to and how much to transfer then transfers it
+	 */
+	public void transferMoney() {
+		Account receiver = selectAccountToTransferTo();
+		
+		Scanner amountEntered = new Scanner(System.in);
+		System.out.println("How much would you like to transfer?");
+		try {
+			double amount = amountEntered.nextDouble();
+			this.account.transfer(amount, receiver);
+		} catch (Exception e) {
+			System.out.println("Please enter an double.");
+		}
+	}
+	
+	/**
+	 * Displays a list of the users accounts, the user is propmted to select an account.
+	 * Runs until the user selects a valid account option
+	 * @return account slected by the user
+	 */
+	public Account selectAccountToTransferTo() {
+		printAccountOptions();
+		boolean isAccountSelected = false;
+		
+		do {
+			Scanner userOption = new Scanner(System.in);
+			System.out.println("Please enter number to select account to transfer to:");
+			
+			try {
+				int option = userOption.nextInt();
+				if(isValidAccountOption(option))
+					return User.currentUser.getAccounts().get(option-1);
+			} catch (Exception e) {
+				System.out.println("Please enter an integer.");
+			}
+		} while(!isAccountSelected);
+		return null;
+	}
+	
+	/**
+	 * Prints all the users accounts with a corresponding index
+	 */
+	public void printAccountOptions() {
+		for(int i = 0; i < User.currentUser.getAccounts().size(); i++) {
+			System.out.print(i + 1 + ":");
+			UserMenu.printAccount(User.currentUser.getAccounts().get(i));
+		}
+	}
+	
+	/**
+	 * Checks is the entered option is a valid account option
+	 * @param option value entered by the user
+	 * @return true if its an index in the array, false if not
+	 */
+	public boolean isValidAccountOption(int option) {
+		if(option <= User.currentUser.getAccounts().size() && option > 0) {
+			return true;
+		}
+		return false;
 	}
 }
