@@ -50,4 +50,26 @@ public class AccountTest {
 		
 		User.users.clear();
 	}
+	
+	@Test
+	public void isValidAccountOption() {
+		User user = new User("ayoub", "pass5236");
+		User.addUser(user);
+		User.currentUser = user;
+		
+		UserMenu.createCheckingAccount();
+		UserMenu.createSavingsAccount();
+		AccountMenu menu = new AccountMenu(User.currentUser.getAccounts().get(0));
+		
+		//assertEquals(2, User.currentUser.getAccounts().size());
+		
+		assertTrue(menu.isValidAccountOption(1));
+		assertTrue(menu.isValidAccountOption(2));
+		
+		assertFalse(menu.isValidAccountOption(0));
+		assertFalse(menu.isValidAccountOption(3));
+		
+		User.users.clear();
+	}
+
 }
