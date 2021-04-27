@@ -57,3 +57,18 @@ Anything we implemented but doesn't currently work
 
 To Run:
 - Use the command * sh run.sh * on the command line
+
+## Iteration 3
+
+What stories were completed:
+- Transfer Money
+- Select Account to View
+- Account Menu
+- Connect Withdaw, Deposit, Check Interest, Transfer to Account Menu
+- Connect Create Savings Account to the User Menu
+
+Anything we implemented but doesn't currently work
+- Everything currently works.
+
+To Run:
+- Use the command * sh run.sh * on the command line
