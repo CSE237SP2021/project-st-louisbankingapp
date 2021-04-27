@@ -43,7 +43,6 @@ public class Account {
 		if (amount > 0) {
 			accountBalance += amount;
 			accountBalance = Math.round(accountBalance * 100.0)/100.0;
-			System.out.println("Account balance is now " + accountBalance);
 			return accountBalance;
 		}else {
 			System.out.println("Attempted invalid deposit amount. Account balance was not changed.");
@@ -61,7 +60,6 @@ public class Account {
 		if (amount > 0 && amount < accountBalance) {
 			accountBalance -= amount;
 			accountBalance = Math.round(accountBalance * 100.0)/100.0;
-			System.out.println("Account balance is now " + accountBalance);
 			return accountBalance;
 		}else {
 			System.out.println("Attempted invalid withdraw amount. Account balance was not changed.");
@@ -69,6 +67,29 @@ public class Account {
 		}
 	}
 	
+	/**
+	 * Transfers money from one account to another by using the withdraw and deposit functions
+	 * @param amount 
+	 * @param receiver
+	 * @return A boolean indicating if the transfer occurred successfully
+	 */
+	public boolean transfer(double amount, Account receiver) {
+		double pastBalanceThis = this.getAccountBalance();
+		double pastBalanceReceiver = receiver.getAccountBalance();
+		
+		this.withdraw(amount);
+		receiver.deposit(amount);
+		if(this.getAccountBalance() + amount == pastBalanceThis && receiver.getAccountBalance() - amount == pastBalanceReceiver) {
+			return true;
+		}else {
+			if(this.getAccountBalance() + amount == pastBalanceThis) {
+				this.deposit(amount);
+			}else if(receiver.getAccountBalance() - amount == pastBalanceReceiver){
+				receiver.withdraw(amount);
+			}
+			return false;
+		}
+	}
 	
 	public void checkInterest(){
 		double annualInterest = this.calculateAnnualInterest();
